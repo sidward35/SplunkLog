@@ -6,16 +6,16 @@
 # |            http://superlog.andross.fr/            | #
 # +————————————————————————————————————————————————————+ #
 
-save-delay: 300
-date-format: 'HH:mm:ss'
-logsFormat: '{DAY}-{MONTH}-{YEAR}_{TYPE}.log'
+save-delay: 00
+date-format: 'yyyy-MM-dd HH:mm:ss'
+logsFormat: 'devster7.log'
 logsLiveFormat: '&7&o[{TIME}][{EVENT}] {LOG}'
 logsInConsole: true
 logsInGame: false
 
-gzipLogsAfter: 2
+gzipLogsAfter: 0
 deleteLogs:
-  after: 7
+  after: 0
   evenGZippedLogs: true
 
 alertCommands:
@@ -31,4 +31,10 @@ messages:
 events:
   AsyncPlayerChatEvent:
     enabled: true
-    message: 'said {MESSAGE}'
+    message: '{PLAYER} said {MESSAGE}'
+  BlockPlaceEvent:
+    enabled: true
+    message: '{PLAYER} placed {NAME} on [{LOCWORLD};{LOCX};{LOCY};{LOCZ}]'
+  BlockBreakEvent:
+    enabled: true
+    message: '{PLAYER} broke {NAME} on [{LOCWORLD};{LOCX};{LOCY};{LOCZ}]'
