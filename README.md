@@ -29,7 +29,7 @@ For this project, I decided to use AWS (free tier) and set up two EC2 instances.
 7. After playing on the server for a bit, head over to Splunk Web (`http://<ENTERPRISE-SERVER-IP>:8000`) and login with the credentials you set up in Step 1 (username `admin` and password `changeme` by default). Extract fields from the logged events to define date/time, player name, action, etc.
 ![Step 7](https://i.imgur.com/gR6SWK6.png)
 
-8. And the final piece of the puzzle: setup your dashboard! Make searches using the fields you just extracted, and create a dashboard, adding searches to it as panels.
+8. And the final piece of the puzzle: setup your dashboard! Make searches using the fields you just extracted, and create a dashboard, adding searches to it as panels. ([Here](https://raw.githubusercontent.com/sidward35/SplunkLog/master/splunk_dashboard/dashboard.xml)'s a sample dashboard that you can use. It relies on certain extracted fields that you can find [here](https://raw.githubusercontent.com/sidward35/SplunkLog/master/splunk_dashboard/%24SPLUNK_HOME-etc-apps-search-local-props.conf).)
 
 9. You can log even more events by checking out the [SuperLog documentation](http://superlog.andross.fr/#doc) and scrolling down to the `Events` section. There you will find all the different kinds of actions and events that can be logged from Minecraft (there's a ton of them), as well as the code that needs to be added to the `config.yml` from Step 3, in order to get those events logged.
 ![Step 9](https://i.imgur.com/yZ0hGAe.png)
