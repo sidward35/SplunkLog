@@ -6,16 +6,16 @@
 # |            http://superlog.andross.fr/            | #
 # +————————————————————————————————————————————————————+ #
 
-save-delay: 00
+save-delay: 0
 date-format: 'yyyy-MM-dd HH:mm:ss'
-logsFormat: 'devster7.log'
+logsFormat: '{DAY}-{MONTH}-{YEAR}_{TYPE}.log'
 logsLiveFormat: '&7&o[{TIME}][{EVENT}] {LOG}'
 logsInConsole: true
 logsInGame: false
 
 gzipLogsAfter: 0
 deleteLogs:
-  after: 0
+  after: 1
   evenGZippedLogs: true
 
 alertCommands:
@@ -38,3 +38,25 @@ events:
   BlockBreakEvent:
     enabled: true
     message: '{PLAYER} broke {NAME} on [{LOCWORLD};{LOCX};{LOCY};{LOCZ}]'
+  
+  #PlayerCommandPreprocessEvent:
+    #enabled: true
+    #message: '{PLAYER} used command: {MESSAGE}'
+    #message-ignored:
+      #- '/login'
+      #- '/register'
+  #PlayerBedEnterEvent:
+    #enabled: true
+    #message: '{PLAYER} located on [{BED.LOCWORLD};{BED.LOCX};{BED.LOCY};{BED.LOCZ}]'
+  #PlayerRespawnEvent:
+    #enabled: true
+    #message: '{PLAYER} died'
+  #PlayerGameModeChangeEvent:
+    #enabled: true
+    #message: '{PLAYER} switched to {NEWGAMEMODE}'
+  #PlayerItemBreakEvent:
+    #enabled: true
+    #message: '{PLAYER} breaked a {BROKENITEM.NAME}'
+  #PlayerItemConsumeEvent:
+    #enabled: true
+    #message: '{PLAYER} consumed a {ITEM.NAME}'
