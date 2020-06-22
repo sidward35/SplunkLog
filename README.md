@@ -1,4 +1,4 @@
-# SplunkLog for Minecraft
+# Splunk Your Minecraft Server
 
 ![Dashboard example](https://i.imgur.com/PmH1U2V.png)
 
