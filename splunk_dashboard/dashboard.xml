@@ -8,9 +8,18 @@
         <latest></latest>
       </default>
     </input>
-    <input type="text" token="field2">
-      <label>Player Name</label>
+    <input type="dropdown" token="field2" searchWhenChanged="true">
+      <label></label>
       <default>devster7</default>
+      <fieldForLabel>player</fieldForLabel>
+      <fieldForValue>player</fieldForValue>
+      <search>
+        <query>host=aws_instance
+| top player
+| fields player</query>
+        <earliest>0</earliest>
+        <latest></latest>
+      </search>
     </input>
   </fieldset>
   <row>
@@ -300,11 +309,12 @@
       <title>Tools Broken</title>
       <chart>
         <search>
-          <query>host=aws_instance player=devster7 action=breaked
+          <query>host=aws_instance player=$field2$ action=breaked
 | rex field=_raw "^(?:[^ \n]* ){5}(?P&lt;tool&gt;.+)" 
 | eval tool=replace(tool,"_"," ")
 | chart count by tool</query>
-          <earliest>1592535800.000</earliest>
+          <earliest>$field1.earliest$</earliest>
+          <latest>$field1.latest$</latest>
           <sampleRatio>1</sampleRatio>
         </search>
         <option name="charting.axisLabelsX.majorLabelStyle.overflowMode">ellipsisNone</option>
@@ -337,6 +347,7 @@
         <option name="charting.legend.mode">standard</option>
         <option name="charting.legend.placement">none</option>
         <option name="charting.lineWidth">2</option>
+        <option name="refresh.display">progressbar</option>
         <option name="trellis.enabled">0</option>
         <option name="trellis.scales.shared">1</option>
         <option name="trellis.size">medium</option>
