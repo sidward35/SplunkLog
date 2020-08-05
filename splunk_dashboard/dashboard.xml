@@ -14,7 +14,7 @@
       <fieldForLabel>player</fieldForLabel>
       <fieldForValue>player</fieldForValue>
       <search>
-        <query>host=aws_instance
+        <query>sourcetype=minecraft_logs
 | top player
 | fields player</query>
         <earliest>0</earliest>
@@ -24,58 +24,10 @@
   </fieldset>
   <row>
     <panel>
-      <title>Server Latency</title>
-      <chart>
-        <search>
-          <query>host=DietPi latency=*
-| timechart span=5s avg(latency)</query>
-          <earliest>0</earliest>
-          <latest></latest>
-          <sampleRatio>1</sampleRatio>
-        </search>
-        <option name="charting.axisLabelsX.majorLabelStyle.overflowMode">ellipsisNone</option>
-        <option name="charting.axisLabelsX.majorLabelStyle.rotation">0</option>
-        <option name="charting.axisTitleX.text">Time</option>
-        <option name="charting.axisTitleX.visibility">visible</option>
-        <option name="charting.axisTitleY.text">Latency (s)</option>
-        <option name="charting.axisTitleY.visibility">visible</option>
-        <option name="charting.axisTitleY2.visibility">visible</option>
-        <option name="charting.axisX.abbreviation">none</option>
-        <option name="charting.axisX.scale">linear</option>
-        <option name="charting.axisY.abbreviation">none</option>
-        <option name="charting.axisY.scale">linear</option>
-        <option name="charting.axisY2.abbreviation">none</option>
-        <option name="charting.axisY2.enabled">0</option>
-        <option name="charting.axisY2.scale">inherit</option>
-        <option name="charting.chart">line</option>
-        <option name="charting.chart.bubbleMaximumSize">50</option>
-        <option name="charting.chart.bubbleMinimumSize">10</option>
-        <option name="charting.chart.bubbleSizeBy">area</option>
-        <option name="charting.chart.nullValueMode">connect</option>
-        <option name="charting.chart.showDataLabels">none</option>
-        <option name="charting.chart.sliceCollapsingThreshold">0.01</option>
-        <option name="charting.chart.stackMode">default</option>
-        <option name="charting.chart.style">shiny</option>
-        <option name="charting.drilldown">all</option>
-        <option name="charting.layout.splitSeries">0</option>
-        <option name="charting.layout.splitSeries.allowIndependentYRanges">0</option>
-        <option name="charting.legend.labelStyle.overflowMode">ellipsisMiddle</option>
-        <option name="charting.legend.mode">standard</option>
-        <option name="charting.legend.placement">none</option>
-        <option name="charting.lineWidth">2</option>
-        <option name="refresh.display">progressbar</option>
-        <option name="trellis.enabled">0</option>
-        <option name="trellis.scales.shared">1</option>
-        <option name="trellis.size">medium</option>
-      </chart>
-    </panel>
-  </row>
-  <row>
-    <panel>
       <title>Respawn Count</title>
       <single>
         <search>
-          <query>host="aws_instance" $field2$ died 
+          <query>sourcetype=minecraft_logs $field2$ died 
 | stats count</query>
           <earliest>$field1.earliest$</earliest>
           <latest>$field1.latest$</latest>
@@ -105,7 +57,7 @@
       <title>Sleep Count</title>
       <single>
         <search>
-          <query>host="aws_instance" player=$field2$ actionType=PlayerBedEnterEvent
+          <query>sourcetype=minecraft_logs player=$field2$ actionType=PlayerBedEnterEvent
 | stats count</query>
           <earliest>$field1.earliest$</earliest>
           <latest>$field1.latest$</latest>
@@ -135,7 +87,7 @@
       <title>Cheat Count</title>
       <single>
         <search>
-          <query>host="aws_instance" player=$field2$ actionType=PlayerGameModeChangeEvent CREATIVE
+          <query>sourcetype=minecraft_logs player=$field2$ actionType=PlayerGameModeChangeEvent CREATIVE
 | stats count</query>
           <earliest>$field1.earliest$</earliest>
           <latest>$field1.latest$</latest>
@@ -167,7 +119,7 @@
       <title>Blocks Placed</title>
       <chart>
         <search>
-          <query>host="aws_instance" player=$field2$ action=placed
+          <query>sourcetype=minecraft_logs player=$field2$ action=placed
 | eval blockName=replace(blockName,"_"," ")
 | stats count by blockName</query>
           <earliest>$field1.earliest$</earliest>
@@ -212,7 +164,7 @@
       <title>Blocks Broken</title>
       <chart>
         <search>
-          <query>host="aws_instance" player=$field2$ action=broke
+          <query>sourcetype=minecraft_logs player=$field2$ action=broke
 | eval blockName=replace(blockName,"_"," ")
 | stats count by blockName</query>
           <earliest>$field1.earliest$</earliest>
@@ -259,7 +211,7 @@
       <title>Food Eaten</title>
       <chart>
         <search>
-          <query>host=aws_instance player=$field2$ action=consumed
+          <query>sourcetype=minecraft_logs player=$field2$ action=consumed
 | rex field=_raw "^(?:[^ \n]* ){5}(?P&lt;foodItem&gt;.+)" 
 | eval foodItem=replace(foodItem,"_"," ")
 | chart count by foodItem</query>
@@ -309,7 +261,7 @@
       <title>Tools Broken</title>
       <chart>
         <search>
-          <query>host=aws_instance player=$field2$ action=breaked
+          <query>sourcetype=minecraft_logs player=$field2$ action=breaked
 | rex field=_raw "^(?:[^ \n]* ){5}(?P&lt;tool&gt;.+)" 
 | eval tool=replace(tool,"_"," ")
 | chart count by tool</query>
@@ -359,7 +311,7 @@
       <title>Commands Recently Run</title>
       <table>
         <search>
-          <query>host="aws_instance" player=$field2$ command
+          <query>sourcetype=minecraft_logs player=$field2$ command
 | rex field=_raw "^(?:[^:\n]*:){4}\s+(?P&lt;Command&gt;.+)" 
 | eval Time=strftime(_time,"%Y-%m-%d %H:%M:%S")
 | table Time, Command
@@ -383,7 +335,7 @@
       <title>Chats Recently Sent</title>
       <table>
         <search>
-          <query>host=aws_instance player=$field2$ action=said 
+          <query>sourcetype=minecraft_logs player=$field2$ action=said 
 | rex field=_raw "^(?:[^ \n]* ){4}(?P&lt;Message&gt;.+)"
 | eval Time=strftime(_time,"%Y-%m-%d %H:%M:%S")
 | table Time, Message
